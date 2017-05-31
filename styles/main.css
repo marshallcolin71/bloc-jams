@@ -76,9 +76,9 @@ body {
 
 }
 
-@media (min-width 640px) {
+@media (min-width: 640px) {
   /*for small screens*/
-  html {font-size: 112%};
+  html {font-size: 112%;}
   .column {
     float: left;
     padding-left: 1rem;
@@ -95,7 +95,7 @@ body {
 
 @media (min-width: 1024px) {
   /*for large screens*/
-  html {font-size: 120%};
+  html {font-size: 120%;}
 
 }
 
