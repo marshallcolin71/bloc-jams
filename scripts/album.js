@@ -12,7 +12,26 @@ var albumPicasso = {
         { title: 'Pink', duration: '3:21'},
         { title: 'Magenta', duration: '2:15'}
     ]
+
 };
+
+//ASSIGNMENT Album
+var albumFunk = {
+  title: 'Funk Flex',
+  artist: 'Funk Master Flex',
+  label: 'BigFunk',
+  year: '1997',
+  albumArtUrl: 'assets/images/album_covers/01.png',
+  songs: [
+      { title: 'Blue', duration: '4:26' },
+      { title: 'Green', duration: '3:14' },
+      { title: 'Red', duration: '5:01' },
+      { title: 'Pink', duration: '3:21'},
+      { title: 'Magenta', duration: '2:15'}
+    ]
+
+};
+
 
 // Another Example Album
 var albumMarconi = {
@@ -42,13 +61,14 @@ var createSongRow = function(songNumber, songName, songLength) {
     return template;
 };
 
+var albumTitle = document.getElementsByClassName('album-view-title')[0];
+var albumArtist = document.getElementsByClassName('album-view-artist')[0];
+var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
+var albumImage = document.getElementsByClassName('album-cover-art')[0];
+var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
+
 var setCurrentAlbum = function(album) {
     // #1
-    var albumTitle = document.getElementsByClassName('album-view-title')[0];
-    var albumArtist = document.getElementsByClassName('album-view-artist')[0];
-    var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
-    var albumImage = document.getElementsByClassName('album-cover-art')[0];
-    var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
 
     // #2
     albumTitle.firstChild.nodeValue = album.title;
@@ -67,4 +87,14 @@ var setCurrentAlbum = function(album) {
 
 window.onload = function() {
     setCurrentAlbum(albumPicasso);
+
+    var albums = [albumPicasso, albumFunk, albumMarconi];
+    var index = 1;
+    albumImage.addEventListener("click", function(event){
+      setCurrentAlbum(albums[index]);
+      index++;
+      if (index == albums.length) {
+        index = 0;
+      }
+    });
 };
