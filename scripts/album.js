@@ -130,14 +130,27 @@ window.onload = function() {
     }
 
     var findParentByClassName = function(element, targetClass) {
-    if (element) {
-        var currentParent = element.parentElement;
-        while (currentParent.className !== targetClass && currentParent.className !== null) {
+      if (element) {
+          var currentParent = element.parentElement;
+          if (currentParent == null || currentParent == undefined) {
+
+            console.log ("No Parent Found");
+            return null;
+          }
+          //Shows a different string in console.log when it fails to find a parent with the given class name: "No parent found with that class name".
+
+          while(currentParent.className != targetParent) {
             currentParent = currentParent.parentElement;
+
+            if (currentParent.className == null) {
+             console.log("No parent found with that class name");
+             break;
+             }
+          }
+          
+          return currentParent;
         }
-        return currentParent;
-    }
-};
+      };
 
 var getSongItem = function(element) {
     switch (element.className) {
