@@ -2,9 +2,9 @@
   position: fixed;
   bottom: 0;
   left: 0;
-  right: -;
+  right: 0;
   height: 200px;
-  backgorund-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.3);
   z-index: 100;
 }
 
@@ -13,7 +13,7 @@
   vertical-align: middle;
 }
 
-.player-bar a, /* Why exactly is this line here ?*/
+ /* Why exactly is this line here ?*/
 .player-bar a:hover {
   color: white;
   cursor: pointer;
