@@ -13,7 +13,7 @@
   vertical-align: middle;
 }
 
- /* Why exactly is this line here ?*/
+
 .player-bar a:hover {
   color: white;
   cursor: pointer;
@@ -114,6 +114,11 @@
  }
 
  .seek-bar .thumb {
+     transition: width 100ms ease-in-out,
+                 height 100ms ease-in-out,
+                 margin-top 100ms ease-in-out,
+                 margin-left 100ms ease-in-out;
+
      position: absolute;
      height: 0.5rem;
      width: 0.5rem;
