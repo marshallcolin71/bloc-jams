@@ -234,3 +234,11 @@ $(document).ready(function() {
         index = 0;
       }
     });
+
+    //Assignment work
+
+    var clickFromBar $('.main-controls .play-pause') {
+        click($(document).ready()) {
+          togglePlayFromPlayerBar();
+        }
+    }
