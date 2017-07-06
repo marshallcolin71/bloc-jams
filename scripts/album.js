@@ -1,7 +1,24 @@
 var setSong = function(songNumber) {
+
+        if (currentSoundFile) {
+            currentSoundFile.stop();
+        }
+
         setSong = parseInt(songNumber);
         setSong = currentAlbum.songs[songNumber - 1];
+        currentSoundFile = new buzz.sound(currentSongFromAlbum.audioUrl, {
+              formats: ['mp3'],
+              preload: true
+        });
+
+        setVolume(currentVolume);
 };
+
+        var setVolume = function(volume) {
+            if (currentSoundFile) {
+                currentSoundFile.setVolume(volume);
+            }
+        };
 
 var getSongNumberCell = function(number) {
         return $('song-item-number[data-song-number="' + number + '"]');
@@ -19,29 +36,44 @@ var createSongRow = function(songNumber, songName, songLength) {
 
         var $row = $(template);
 
-        var clickHandler = function() {
-                var songNumber = parseInt($(this).attr('data-song-number'));
 
-                if (setSong !== null) {
-                    //Revert to song number for currently playing song bc user started playing new song
-                    var currentlyPlayingCell = $('.song-item-number[data-song-number="' + setSong + '"]');
-                    currentlyPlayingCell.html(setSong);
-                }
+  var clickHandler = function() {
 
-                if (setSong !== songNumber) {
-                    // Switch from Play -> Pause button to indicate new song is playing.
-                    $(this).html(pauseButtonTemplate);
-                    setSong = songNumber;
-                    setSong = currentAlbum.songs[songNumber - 1];
-                    updatePlayerBarSong();
-                } else if (setSong === songNumber) {
-                    //Switch from Pause -> Play button to pause currently playing songNumber
-                    $(this).html(playButtonTemplate);
-                    $('.main-controls .play-pause').html(playerBarPlayButton);  //Why are these defined down below and then called up here?
-                    setSong = null;
-                    setSong = null;  //What is the purpose of this?
-                }
-        };
+              var songNumber = parseInt($(this).attr('data-song-number'));
+
+              if (currentlyPlayingSongNumber !== null) {
+                  // Revert to song number for currently playing song because user started playing new song.
+                  var currentlyPlayingCell = getSongNumberCell(currentlyPlayingSongNumber);
+
+                  currentlyPlayingCell = getSongNumberCell(currentlyPlayingSongNumber);
+                  currentlyPlayingCell.html(currentlyPlayingSongNumber);
+              }
+
+               if (currentlyPlayingSongNumber !== songNumber) {
+                   // Switch from Play -> Pause button to indicate new song is playing.
+                   setSong(songNumber);
+              +            currentSoundFile.play();
+                   $(this).html(pauseButtonTemplate);
+                   currentSongFromAlbum = currentAlbum.songs[songNumber - 1];
+                   updatePlayerBarSong();
+               } else if (currentlyPlayingSongNumber === songNumber) {
+
+                          if (currentSoundFile.isPaused()) {
+                              $(this).html(pauseButtonTemplate);
+                              $('.main-controls .play-pause').html(playerBarPauseButton);
+                              currentSoundFile.play();
+                          } else {
+                              $(this).html(playButtonTemplate);
+                              $('.main-controls .play-pause').html(playerBarPlayButton);
+                              currentSoundFile.pause();
+                          }
+
+               }
+
+};
+
+
+
 
 /*Why use 'data-song-number' here and '.data-song-number' down below in the Hover function??*/
         var onHover = function(event) {
@@ -113,8 +145,9 @@ var nextSong = function() {
         var lastSongNumber = parseInt(setSong);
 
         //Set a new current song
-        setSong = currentSongIndex + 1;
         setSong = currentAlbum.songs[currentSongIndex];
+        setSong = currentSongIndex + 1;
+        currentSoundFile.play();
 
         //Update the player bar info
         updatePlayerBarSong();
@@ -141,8 +174,10 @@ var previousSong = function() {
         var lastSongNumber = parseInt(setSong);
 
         // Set a new current song
-        setSong = currentSongIndex + 1;
         setSong = currentAlbum.songs[currentSongIndex];
+        setSong = currentSongIndex + 1;
+        currentSoundFile.play();
+
 
         // Update the Player Bar information
         updatePlayerBarSong();
@@ -174,8 +209,10 @@ var updatePlayerBarSong = function() {
           // Store state of playing songs
           var currentlyPlayingSong = null;
           var currentAlbum = null;          //Why the null values?
+          var currentSoundFile = null;
           var setSong = null;
           var setSong = null;
+          var currentVolume = 80;
 
           var $previousButton = $('.main-controls .previous');
           var $nextButton = $('.main-controls .next');
