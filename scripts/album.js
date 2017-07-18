@@ -103,6 +103,7 @@ var updateSeekBarWhileSongPlays = function() {
 
             updateSeekPercentage($seekBar, seekBarFillRatio);
             setCurrentTimeInPlayerBar(filterTimeCode(this.getTime()));
+            
             songEnd();
         });
     }
